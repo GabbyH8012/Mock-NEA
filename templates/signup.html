@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}
+To-Do App: Sign-up
+{% endblock %}
+
+{% block content %}
+<div>
+    <h1>To-Do</h1>
+    <h2>Sign-up</h2>
+    <form action="/auth/createuser" method="post">
+        <div>
+            <label for="username">Username: </label>
+            <input name="username" id="username" type="text" required minlength="3" />
+        </div>
+
+        <div>
+            <label for="password">Password: </label>
+            <input name="password" id="password" type="password" required minlength="8" />
+        </div>
+
+        <div>
+            <label for="repassword">Re-enter password: </label>
+            <input name="repassword" id="repassword" type="password" required minlegth="8" />
+        </div>
+
+        <div>
+            <input type="submit" value="Sign-up" />
+        </div>
+
+    </form>
+
+    <p>Already have an account? <a href="/">Click here to sign-in</a></p>
+</div>
+{% endblock %}

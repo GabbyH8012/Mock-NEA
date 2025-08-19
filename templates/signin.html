@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+
+{% block title %}
+To-Do App: Sign-in
+{% endblock %}
+
+{% block content %}
+<div>
+    <h1>To-Do</h1>
+    <h2>Sign-in</h2>
+    <form>
+        <div>
+            <label for="username">Username: </label>
+            <input name="username" id="username" type="text" />
+        </div>
+        <div>
+            <label for="password">Password: </label>
+            <input name="pasword" id="password" type="password" />
+        </div>
+        <div>
+            <input type="submit" value="Sign-in" />
+        </div>
+    </form>
+
+    <p>No account? <a href="/signup">Click here to sign-up</a></p>
+</div>
+{% endblock %}
