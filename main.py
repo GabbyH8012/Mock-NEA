@@ -1,4 +1,5 @@
 from flask import Flask, render_template, request
+from database import DatabaseHandler
 
 app = Flask(__name__)
 
@@ -21,10 +22,13 @@ def createUser():
     password = formDetails.get("password")
     repassword = formDetails.get("repassword")
 
-    if len(username) > 2 and len(password) > 7 and len(repassword) > 7:
-        return "creating user..."
+    if len(username) > 2 and len(password) > 7 and len(repassword) > 7 and password == repassword:
+        db  = DatabaseHandler()
+        success = db.createUser(username, password)
+        if success:
+            return "user created successfully"
     
-
     return "failed to create user..."
+
 
 app.run(debug = True)
