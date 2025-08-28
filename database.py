@@ -23,5 +23,18 @@ class DatabaseHandler:
                 return True
             except:
                  return False
-  
+            
+    def authoriseUser(self, username, password):
+        try:
+            with self.connect() as conn:
+                results = conn.execute("SELECT userID FROM users WHERE username=? AND password=?" , (username, password))
+                userDetails = results.fetchone()
+                if userDetails !=None:
+                    return True
+                
+                return False
+            
+        except:
+            return False
+        
 

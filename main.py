@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, redirect, render_template, request, url_for
 from database import DatabaseHandler
 
 app = Flask(__name__)
@@ -15,6 +15,19 @@ def signup():
 def dashboard():
     return render_template("dashboard.html")
 
+@app.route("/auth/authoriseuser", methods=["POST"])
+def authoriseUser():
+    formDetails = request.form
+    username = formDetails.get("username")
+    password = formDetails.get("password")
+    
+    db = DatabaseHandler()
+    success = db.authoriseUser(username, password)
+    if success:
+        return redirect(url_for("dashboard"))
+    
+    return redirect(url_for("signin"))
+
 @app.route("/auth/createuser", methods=["POST"])
 def createUser():
     formDetails = request.form
@@ -26,9 +39,9 @@ def createUser():
         db  = DatabaseHandler()
         success = db.createUser(username, password)
         if success:
-            return "user created successfully"
+            return redirect(url_for("dashboard"))
     
-    return "failed to create user..."
+    return redirect(url_for("signup"))
 
 
 app.run(debug = True)
