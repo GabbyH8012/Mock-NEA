@@ -27,8 +27,13 @@ To-Do App: Sign-up
         <div>
             <input type="submit" value="Sign-up" />
         </div>
-
     </form>
+
+
+    {% for message in messages %}
+        <p>{{ message }}</p>
+    {% endfor %}
+
 
     <p>Already have an account? <a href="/">Click here to sign-in</a></p>
 </div>

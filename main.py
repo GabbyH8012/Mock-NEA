@@ -1,47 +1,24 @@
-from flask import Flask, redirect, render_template, request, url_for
+from flask import Flask, redirect, render_template, request, url_for, session
+from scripts.isAuthorised import isAuthorised
 from database import DatabaseHandler
+from blueprints.pages import pages
+from blueprints.auth import auth
+
+SECRET_KEY = "thisisabadsecret"
 
 app = Flask(__name__)
+app.secret_key = SECRET_KEY
 
-@app.route("/")
-def signin():
-    return render_template("signin.html")
+app.register_blueprint(pages)
+app.register_blueprint(auth)
 
-@app.route("/signup")
-def signup():
-    return render_template("signup.html")
 
-@app.route("/dashboard")
-def dashboard():
-    return render_template("dashboard.html")
+#db = DatabaseHandler()
+#db.createTables()
 
-@app.route("/auth/authoriseuser", methods=["POST"])
-def authoriseUser():
-    formDetails = request.form
-    username = formDetails.get("username")
-    password = formDetails.get("password")
-    
-    db = DatabaseHandler()
-    success = db.authoriseUser(username, password)
-    if success:
-        return redirect(url_for("dashboard"))
-    
-    return redirect(url_for("signin"))
 
-@app.route("/auth/createuser", methods=["POST"])
-def createUser():
-    formDetails = request.form
-    username = formDetails.get("username")
-    password = formDetails.get("password")
-    repassword = formDetails.get("repassword")
 
-    if len(username) > 2 and len(password) > 7 and len(repassword) > 7 and password == repassword:
-        db  = DatabaseHandler()
-        success = db.createUser(username, password)
-        if success:
-            return redirect(url_for("dashboard"))
-    
-    return redirect(url_for("signup"))
+
 
 
 app.run(debug = True)
